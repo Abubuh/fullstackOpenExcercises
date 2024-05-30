@@ -4,7 +4,7 @@ const Total = ({parts}) => {
   console.log(parts)
   return (
     <>
-      <p>{ parts[0].exercises + parts[1].exercises + parts[2].exercises}</p>
+      <p>Total exercises { parts[0].exercises + parts[1].exercises + parts[2].exercises}</p>
     </>
   )
 }
