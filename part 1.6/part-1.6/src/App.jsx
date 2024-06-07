@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Button from "./components/Button"
-import StatiscticValue from "./components/StatiscticValue"
+import StatiscticValue from "./components/StatiscticLine"
 import Statistics from "./components/Statistics"
 
 function App() {
