@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Button from "./components/Button"
+import StatiscticValue from "./components/StatiscticValue"
 
 function App() {
   const [good, setGood] = useState(0)
@@ -17,6 +18,8 @@ function App() {
     const plus = bad + 1
     setBad(plus)
   }
+  const total = good + neutral + bad
+  const hasValues = good !== 0 || neutral !== 0 || bad !== 0
   return (
     <div>
       <div>
@@ -27,10 +30,13 @@ function App() {
       </div>
       <div>
         <h2>statistics</h2>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-      </div>
+        <StatiscticValue text={'Good'} value={good}/>
+        <StatiscticValue text={'Neutral'} value={neutral}/>
+        <StatiscticValue text={'Bad'} value={bad}/>
+        <StatiscticValue text={'All'} value={total}/>
+        <StatiscticValue text={'Average'} value={hasValues === false ? 0 : ((good - bad)/ total).toFixed(2) }/>
+        <StatiscticValue text={'Positive'} value={hasValues === false ?  0 : (good / (good + neutral + bad) *100).toFixed(2) + '%'}/>
+        </div>
     </div>
   )
 }
