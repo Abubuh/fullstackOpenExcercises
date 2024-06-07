@@ -30,7 +30,10 @@ function App() {
         <Button text='neutral' onClick={handleNeutralButton}></Button>
         <Button text='bad' onClick={handleBadButton}></Button>
       </div>
-      <Statistics good={good} neutral={neutral} bad={bad} total={total} hasValues={hasValues}></Statistics>
+      { hasValues === true ? 
+        <Statistics good={good} neutral={neutral} bad={bad} total={total} hasValues={hasValues}></Statistics>
+        : "No feedback given"
+    }
     </div>
   )
 }
