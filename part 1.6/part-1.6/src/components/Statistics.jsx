@@ -7,7 +7,6 @@ const Statistics = ({good, neutral, bad, hasValues, total}) => {
         <h2>statistics</h2>
         <table>
             <tbody>
-                
                 <StatiscticLine text='Good' value={good}/>
                 <StatiscticLine text='Neutral' value={neutral}/>
                 <StatiscticLine text='Bad' value={bad}/>
