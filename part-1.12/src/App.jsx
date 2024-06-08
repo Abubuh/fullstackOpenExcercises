@@ -18,15 +18,21 @@ function App() {
     setSelected(Math. floor(Math. random() * 8))
   }
   const handleVote = () => {
-    const voteAdded = votes[selected] += 1
-    setVotes({...votes, selected : voteAdded})
+    const addVote = votes[selected] += 1
+    setVotes({...votes, ...votes[selected] = addVote})
   }
-
+  const votesValues = Object.values(votes)
   return (
     <div>
-      {anecdotes[selected]}<br></br>
+      <p>{anecdotes[selected]}<br/></p>
+      <p>Has {votes[selected]} votes</p>
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleAnecdote}>Next anecdote</button>
+      <div>
+        <h2>Anecdote with most votes</h2>
+        <p>{anecdotes[votesValues.indexOf(Math.max(...votesValues))]}</p>
+        <p>Has {Math.max(...votesValues)} votes</p>
+      </div>
     </div>
   )
 }
