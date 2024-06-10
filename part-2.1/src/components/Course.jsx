@@ -1,18 +1,17 @@
-import React from 'react'
 import Header from './Header'
 import Content from './Content'
 import Total from './Total'
 
 const Course = ({course}) => {
-    let total = 0 
-    course.parts.map((part) => {
-         total += part.exercises
-    })
+    const totalSum = course.parts.reduce(
+        (number, currentValue) => number + currentValue.exercises,
+        0,
+      );
     return (
     <div>
         <Header name={course.name}></Header>
         <Content parts={course.parts}></Content>
-        <Total total={total}></Total>
+        <Total total={totalSum}></Total>
     </div>
   )
 }
