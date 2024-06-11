@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 const App = () => {
+
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
   ]) 
+
   const [newName, setNewName] = useState('')
 
   const handleName = (event) => {
@@ -12,8 +14,13 @@ const App = () => {
 
   const handleAdd = (event) => {
     event.preventDefault()
+    if (persons.some(e => e.name === newName)) {
+      alert(`${newName} is already on the phonebook!`)
+      return
+    }
     setPersons([...persons, {name: newName}])
   }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -27,10 +34,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {
-        persons.map((name) => {
-          console.log(name)
+        persons.map((name, index) => {
           return (
-            <p key={name.id}>{name.name}</p>
+            <p key={index}>{name.name}</p>
             )
         })
       }
