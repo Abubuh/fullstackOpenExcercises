@@ -14,7 +14,6 @@ const App = () => {
     event.preventDefault()
     setPersons([...persons, {name: newName}])
   }
-  console.log(persons)
   return (
     <div>
       <h2>Phonebook</h2>
