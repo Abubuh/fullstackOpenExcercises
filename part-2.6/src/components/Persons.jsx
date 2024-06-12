@@ -5,9 +5,7 @@ const Persons = ({filteredPersons}) => {
     <>{
         filteredPersons.map((name, index) => {
           return (
-            <>
               <p key={index}>{name.name} - {name.number}</p>
-            </>
             )
         })
       }
