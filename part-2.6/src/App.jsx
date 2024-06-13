@@ -12,9 +12,7 @@ const App = () => {
  
   useEffect(() => {
     const fetchPersons = () => {
-      fetch('http://localhost:3002/persons')
-      .then(res => res.json())
-      .then(data => setPersons(data))
+      axios.get('http://localhost:3002/persons').then(res => setPersons(res.data))
     }
     fetchPersons()
   },[])
