@@ -32,20 +32,26 @@ const App = () => {
   
   const handleAdd = (event) => {
     event.preventDefault()
+    if(newName.length === 0 && newNumber.length === 0)return alert("Fill all the data")
     if (persons.some(e => e.name === newName)) {
       alert(`${newName} is already on the phonebook!`)
       return
     }
-    setPersons([...persons, {name: newName, number: newNumber}])
+    let personObject = {name: newName, number: newNumber}
+    axios.post('http://localhost:3002/persons', personObject)
+    .then(res => {
+      setPersons([...persons, res.data])
+      setNewName('')
+      setNewNumber('')
+    })
   }
-
 
   return (
     <div>
       <h2>Phonebook</h2>
       <Filter handleFilter={handleFilter}/>
       <h2>Add a new</h2>
-      <PersonForm handleAdd={handleAdd} handleName={handleName} handleNumber={handleNumber}/>
+      <PersonForm handleAdd={handleAdd} handleName={handleName} handleNumber={handleNumber} name={newName} number={newNumber}/>
       <h3>Numbers</h3>
       <Persons filteredPersons={filteredPersons}></Persons>
     </div>
