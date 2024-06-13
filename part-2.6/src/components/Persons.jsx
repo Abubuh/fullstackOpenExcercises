@@ -1,14 +1,18 @@
-const Persons = ({filteredPersons}) => {
+const Persons = ({filteredPersons, handleDelete}) => {
+ 
   return (
-    <>{
+    <>
+      {
         filteredPersons.length > 0 ? 
-        filteredPersons.map((name, index) => {
+        filteredPersons.map((person, index) => {
           return (
-              <p key={index}>{name.name} - {name.number}</p>
+              <div key={index}>
+                <p>{person.name} - {person.number} <button onClick={() => handleDelete(person.id)}>delete</button></p>
+              </div>
             )
         }): "No persons found"
       }
-      </>
+    </>
   )
 }
 

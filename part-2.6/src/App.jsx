@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
-import axios from 'axios'
+import personService from "./services/persons"
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,14 +11,10 @@ const App = () => {
   const [search, setSearch] = useState('')
  
   useEffect(() => {
-    const fetchPersons = () => {
-      axios.get('http://localhost:3002/persons').then(res => setPersons(res.data))
-    }
-    fetchPersons()
+      personService.getAll().then(res => setPersons(res.data))
   },[])
 
   const filteredPersons = search.length > 0 ? persons.filter(person => person.name.includes(search)) : persons 
-  console.log(filteredPersons)
   const handleName = (event) => {
     setNewName(event.target.value)
   }
@@ -29,6 +25,16 @@ const App = () => {
   const handleFilter = (event) => {
     setSearch(event.target.value)
   }
+
+  const handleDelete = (id) => {
+    if(window.confirm('Do you really want to delete it?')){
+      personService.deletePerson(id)
+      .then(res => {
+        let newPersons = persons.filter((person) => person.id !== res.data.id)
+        setPersons(newPersons)
+      })
+    }
+  }
   
   const handleAdd = (event) => {
     event.preventDefault()
@@ -38,7 +44,7 @@ const App = () => {
       return
     }
     let personObject = {name: newName, number: newNumber}
-    axios.post('http://localhost:3002/persons', personObject)
+    personService.create(personObject)
     .then(res => {
       setPersons([...persons, res.data])
       setNewName('')
@@ -53,7 +59,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm handleAdd={handleAdd} handleName={handleName} handleNumber={handleNumber} name={newName} number={newNumber}/>
       <h3>Numbers</h3>
-      <Persons filteredPersons={filteredPersons}></Persons>
+      <Persons filteredPersons={filteredPersons} handleDelete={handleDelete}></Persons>
     </div>
   )
 }
