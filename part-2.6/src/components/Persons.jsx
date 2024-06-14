@@ -7,7 +7,7 @@ const Persons = ({filteredPersons, handleDelete}) => {
         filteredPersons.map((person, index) => {
           return (
               <div key={index}>
-                <p>{person.name} - {person.number} <button onClick={() => handleDelete(person.id)}>delete</button></p>
+                <p>{person.name} - {person.number} <button onClick={() => handleDelete(person.id, person.name)}>delete</button></p>
               </div>
             )
         }): "No persons found"
