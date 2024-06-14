@@ -1,15 +1,16 @@
 import { useState } from 'react'
+import  './index.css'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
-import personService from "./services/persons"
 import usePersons from './hooks/usePersons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
-  const {persons, refetch: refetchPersons, handleAdd, handleDelete} = usePersons()
+  const {persons, message, handleAdd, handleDelete} = usePersons()
   const filteredPersons = search.length > 0 ? persons.filter(person => person.name.includes(search)) : persons 
 
   const handleName = (event) => {
@@ -23,7 +24,8 @@ const App = () => {
     setSearch(event.target.value)
   }
 
-  const onHandleAdd = () => {
+  const onHandleAdd = (event) => {
+    event.preventDefault()
     handleAdd(newName, newNumber)
     setNewName('')
     setNewNumber('')
@@ -32,6 +34,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {message !== 'None' ? <Notification message={message}/> : <></>}
       <Filter handleFilter={handleFilter}/>
       <h2>Add a new</h2>
       <PersonForm handleAdd={onHandleAdd} handleName={handleName} handleNumber={handleNumber} name={newName} number={newNumber}/>

@@ -3,7 +3,7 @@ import personService from "../services/persons"
 
 const usePersons = () => {
   const [persons, setPersons] = useState([])
-
+  const [message, setMessage] = useState('None')
   const fetchPersons = () => {
     personService.getAll().then(res => setPersons(res.data))
   }
@@ -15,12 +15,14 @@ const usePersons = () => {
     if (person) {
       if(window.confirm('This person is already on the phonebook, do you wanna change the number?')){
         personService.updatePerson(person.id, newPersonData)
+        setMessage(`Updated ${newName}`)
         fetchPersons()
       }
     }
     else{
       personService.create(newPersonData)
       .then(() => {
+        setMessage(`Added ${newName}`)
         fetchPersons()
       })
     }
@@ -31,6 +33,7 @@ const usePersons = () => {
       personService.deletePerson(id)
       .then(() => {
         fetchPersons()
+        setMessage(`Deleted ${name}`)
       })
     }
   }
@@ -41,6 +44,7 @@ const usePersons = () => {
 
   return {
     persons,
+    message,
     refetch: fetchPersons,
     handleDelete,
     handleAdd
