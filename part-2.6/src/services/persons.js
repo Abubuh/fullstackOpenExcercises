@@ -14,11 +14,10 @@ const deletePerson = (id) => {
 }
 
 const updatePerson= (id, newData) => {
-    axios.put(`${baseUrl}/${id}`, newData)
-    .then(res => console.log('Done', res.data))
-    .catch(error => {
-        console.log(error)
-    })
+    return axios
+    .put(`${baseUrl}/${id}`, newData)
+    .then(res => res.data)
+    .then(data => {return data})
 }
 
 export default { 

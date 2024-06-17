@@ -10,7 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
-  const {persons, message, handleAdd, handleDelete} = usePersons()
+  const {persons, message, callStatus, handleAdd, handleDelete} = usePersons()
   const filteredPersons = search.length > 0 ? persons.filter(person => person.name.includes(search)) : persons 
 
   const handleName = (event) => {
@@ -34,7 +34,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      {message !== 'None' ? <Notification message={message}/> : <></>}
+      {message !== 'None' ? <Notification message={message} messageColor={callStatus}/> : <></>}
       <Filter handleFilter={handleFilter}/>
       <h2>Add a new</h2>
       <PersonForm handleAdd={onHandleAdd} handleName={handleName} handleNumber={handleNumber} name={newName} number={newNumber}/>
