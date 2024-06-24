@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import DisplayCountryData from './components/DisplayCountryData'
+
 
 const COUNTRIES_URL = "https://studies.cs.helsinki.fi/restcountries/api/all"
-
 const App = () => {
   const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
+  const [countriesShowed, setCountriesShowed] = useState([])
   let countriesFiltered = search.length > 1 ? countries.filter((country) => country.name.common.toLowerCase().includes(search.toLowerCase())) : countries
   useEffect(() => {
     const fetchCountries = () => {
@@ -17,6 +19,16 @@ const App = () => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value)
+  }
+  
+
+  const handleShownCountries = (countrySelected) => {
+    if(countriesShowed.includes(countrySelected)){ 
+      let newCountriesShowed = countriesShowed.filter((country) =>  country !== countrySelected)
+      setCountriesShowed(newCountriesShowed)
+    }else{
+      setCountriesShowed([...countriesShowed, countrySelected])
+    }
   }
 
   return (
@@ -32,23 +44,18 @@ const App = () => {
           return (
             <>
             { countriesFiltered.length > 1 ? 
-            <p key={index}>{country.name.common}</p>
-            : 
             <>
-              <h2 key={country.name.common}>{country.name.common}</h2>
-              <p>Capital {country.capital}</p>
-              <p>Area {country.area}</p>
-              <h3>Languages</h3>
-              <ul>
-                {
-                  (Object.values(country.languages).map((language) => {
-                    return (
-                      <li key={language}>{language}</li>
-                    )
-                  }))
-                }
-              </ul>
-              <img src={`https://flagcdn.com/w320/${country.altSpellings[0].toLowerCase()}.png`} alt="" />
+              <p key={index}>{country.name.common}</p>
+              <button onClick={() => handleShownCountries(country.name.common)}>Shown</button>
+              {
+                countriesShowed.includes(country.name.common) ? <DisplayCountryData countryName={country.name.common} countryCapital={country.capital} countryArea={country.area} countryLanguages={country.languages} countryFlag={country.altSpellings[0].toLowerCase()}/>
+                : ""
+              }
+            </>
+            : 
+            <> 
+              <DisplayCountryData countryName={country.name.common} countryCapital={country.capital} countryArea={country.area} countryLanguages={country.languages} countryFlag={country.altSpellings[0].toLowerCase()}/>
+
             </>
             }
             </>
