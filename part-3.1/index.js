@@ -51,6 +51,14 @@ app.post('/api/persons', (req, res) => {
     number: req.body.number,
     id: generatedId()
   }
+  if(!person.name && !person.number){
+    return console.log('Requires name and number')
+  }
+  else if(!person.name){
+    return console.log('Name is empty')
+  }else if(!person.number){
+    return console.log('Number is empty')
+  }
   persons = persons.concat(person)
   res.json(person)
 })
